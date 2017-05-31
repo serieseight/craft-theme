@@ -7,6 +7,7 @@ const imagemin = require('gulp-imagemin')
 const sass = require('gulp-sass')
 const source = require('vinyl-source-stream')
 const uglify = require('gulp-uglify')
+const mysqlDump = require('mysqldump')
 
 gulp.task('css', () => gulp.src('src/css/styles.scss')
   .pipe(sass({
@@ -58,3 +59,17 @@ gulp.task('watch', [ 'build' ], () => {
 })
 
 gulp.task('default', [ 'watch' ])
+
+// $ gulp db
+
+gulp.task('db', () => {
+  mysqlDump({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'dbname',
+    dest:'../../database.sql'
+  }, (err) => {
+    console.log(err)
+  })
+})
